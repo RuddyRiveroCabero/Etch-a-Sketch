@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Etch a Sketch</title>
+    </head>
+    <body>
+        <h1>Etch a Sketch</h1>
+        <button id='btn'>apretame Me</button>
+        <div id="container">
+                <button id="1">Click Me</button>
+                <button id="2">Click Me</button>
+                <button id="3">Click Me</button>
+        </div>
+        <script>
+            let container = document.querySelector('#container');
+            let content = document.createElement('div');
+            content.classList.add('content');
+            content.textContent = 'Yo soy el div content!';
+            container.appendChild(content);
+            let para = document.createElement('p');
+            para.classList.add('para');
+            para.textContent = 'Hey I\'m red!';
+            para.style.color = 'red';
+            container.appendChild(para);
+            let h3 = document.createElement('h3');
+            h3.textContent = 'I’\'m a blue h3!';
+            h3.style.color = 'blue';
+            container.appendChild(h3); 
+            let div = document.createElement('div');
+            div.setAttribute('style','border-style:solid; background:pink');
+            let h1 = document.createElement('h1');
+            let para2 = document.createElement('p');
+            h1.textContent='Im in a div';
+            para2.textContent='Me too';
+            div.appendChild(h1);
+            div.appendChild(para2);
+            container.appendChild(div);
+            let btn = document.getElementById('btn');
+            btn.addEventListener('click', function(e){
+                e.target.style.background = 'blue';
+            });
+            const buttons = document.querySelectorAll('button');
+
+// we use the .forEach method to iterate through each button
+buttons.forEach((button) => {
+
+  // and for each one we add a 'click' listener
+  button.addEventListener('click', (e) => {
+    console.log(button.id);
+  });
+});
+document.onkeydown = function (e) {
+  console.log(e.target);
+};
+
+        </script>
+
+    </body>
+</html>
