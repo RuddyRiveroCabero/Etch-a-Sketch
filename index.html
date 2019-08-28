@@ -5,54 +5,89 @@
     </head>
     <body>
         <h1>Etch a Sketch</h1>
-        <button id='btn'>apretame Me</button>
-        <div id="container">
-                <button id="1">Click Me</button>
-                <button id="2">Click Me</button>
-                <button id="3">Click Me</button>
-        </div>
+        <p>
+          <button id="btn">Reset Classic</button>
+          <button id="rdm">Random Color</button>
+          <button id="opa">Opacity Blue</button>
+          
+
+        </p>
+        <div id='container'></div>
+
         <script>
-            let container = document.querySelector('#container');
-            let content = document.createElement('div');
-            content.classList.add('content');
-            content.textContent = 'Yo soy el div content!';
-            container.appendChild(content);
-            let para = document.createElement('p');
-            para.classList.add('para');
-            para.textContent = 'Hey I\'m red!';
-            para.style.color = 'red';
-            container.appendChild(para);
-            let h3 = document.createElement('h3');
-            h3.textContent = 'I’\'m a blue h3!';
-            h3.style.color = 'blue';
-            container.appendChild(h3); 
-            let div = document.createElement('div');
-            div.setAttribute('style','border-style:solid; background:pink');
-            let h1 = document.createElement('h1');
-            let para2 = document.createElement('p');
-            h1.textContent='Im in a div';
-            para2.textContent='Me too';
-            div.appendChild(h1);
-            div.appendChild(para2);
-            container.appendChild(div);
-            let btn = document.getElementById('btn');
-            btn.addEventListener('click', function(e){
-                e.target.style.background = 'blue';
-            });
-            const buttons = document.querySelectorAll('button');
+        //tenemos una variable por defecto
+        // creamos el contenedor con la variable
+        // creamos el grid segun la variable
+        // cambiamos de color al div
+        // reset buton
 
-// we use the .forEach method to iterate through each button
-buttons.forEach((button) => {
+        //random color
+        // increase opacity 10%
+        let sizeOfGrid=16;
+        let gridColumsauto;
+        let gridcontainer = document.getElementById('container');
+        
+        
+        //set colums of grid
+        function setColumns(sizeOfGrid){
+            gridColumsauto="";
+            for(let i=0;i<sizeOfGrid;i++){
+            gridColumsauto+="auto ";
+        }
+        }
+        function createGrid(sizeOfGrid){
+            for (let i = 0; i < sizeOfGrid*sizeOfGrid; i++) {
+            let divgrid = document.createElement('div');
+            divgrid.classList.add('divgrid');
+            divgrid.setAttribute('style','background:white; border: 1px solid; padding:0px margin:0px;');
+            gridcontainer.appendChild(divgrid);
+            divgrid.addEventListener('mouseover', () => {
+            divgrid.setAttribute('style','background:blue; border: 1px solid; padding:0px margin:0px;');
+                    });
+        };
 
-  // and for each one we add a 'click' listener
-  button.addEventListener('click', (e) => {
-    console.log(button.id);
-  });
-});
-document.onkeydown = function (e) {
-  console.log(e.target);
-};
+        }
+        //definimos columnas
+        setColumns(sizeOfGrid);
+        gridcontainer.setAttribute('style',`height: 960px; width:960px; background:lightblue; padding:10px; grid-gap: 0px; display:inline-grid; grid-template-columns:${gridColumsauto}`)
+        //creamos grid que escucha
+        createGrid(sizeOfGrid);
+        
+        let btn = document.getElementById('btn');
+        btn.addEventListener('click', ()=>{
+            //sizeOfGrid=prompt("Enter the grid size","16-64");
+            document.getElementById("container").innerHTML='';
+            sizeOfGrid = prompt("Please enter your new size of grid from 16 to 64", 16);
+            while (isNaN(sizeOfGrid)||sizeOfGrid<16||sizeOfGrid>64) {
+                alert("Please enter a number from 16 to 64.");
+                sizeOfGrid = prompt("Please enter your new size of grid from 16 to 64", 16);
+           }
+        setColumns(sizeOfGrid);
+        document.getElementById("container").style=`height: 960px; width:960px; background:lightblue; padding:10px; grid-gap: 0px; display:inline-grid; grid-template-columns:${gridColumsauto}`
+        createGrid(sizeOfGrid);   
+        });
+        let rdm = document.getElementById("rdm");
+        rdm.addEventListener('click',function(){
+            for (let i = 0; i < sizeOfGrid*sizeOfGrid; i++) {
+                var x = document.getElementsByClassName("divgrid");
+                x[i].addEventListener('mouseover',function(){
+                x[i].setAttribute('style',`background: rgb(${Math.round(100*Math.random())}, ${Math.round(100*Math.random())}, ${Math.round(100*Math.random())}); border: 1px solid; padding:0px margin:0px;`);  
+                })
 
+            }
+        })
+        let opa = document.getElementById("opa");
+        opa.addEventListener('click',function(){
+            for (let i = 0; i < sizeOfGrid*sizeOfGrid; i++) {
+                let opacity=0;
+                var x = document.getElementsByClassName("divgrid");
+                x[i].addEventListener('mouseover',function(){
+                opacity += 0.1;
+                x[i].setAttribute('style',`background: rgb(0, 0, 255); opacity:${opacity}; border: 1px solid; padding:0px margin:0px;`);  
+                })
+
+            }
+        })
         </script>
 
     </body>
